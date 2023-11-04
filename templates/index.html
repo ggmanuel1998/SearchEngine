@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi Motor de Busqueda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('fondo2.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        header {
+            background: none;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            transition: background-color 5s ease;
+        }
+
+        header:hover {
+           
+        }
+
+        h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+
+        #search-container {
+            text-align: center;
+            margin-top: 50px;
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        #search-container.active {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        #search-box {
+            width: 500px;
+            padding: 10px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+
+        #search-box:focus {
+            border-color: #2f5ea0;
+        }
+
+        #search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #43f7f7;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #search-button:hover {
+            background-color: #1f8387;
+        }
+
+        #results {
+            margin-top: 20px;
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .result {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        .result-title {
+            font-weight: bold;
+        }
+
+        .result-url {
+            color: #2f5ea0;
+        }
+
+        .search-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .search-link {
+            display: inline-block;
+            margin-right: 10px;
+            color: #2f5ea0;
+            text-decoration: none;
+        }
+
+        .search-link:hover {
+            text-decoration: underline;
+        }
+
+        #logo {
+            width: 550px;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+        }
+        #logo:hover {
+            transform: scale(1.2);
+        }
+
+        #tagline {
+            font-family: 'Helvetica', sans-serif; /* Cambia 'Helvetica' por la fuente que desees */
+            font-size: 24px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img id="logo" src="logo1.png" alt="Logo de Mi Motor de Búsqueda">
+        <h1><span id="tagline">Todo a la palma de tu mano!</span></h1>
+    </header>
+
+    <div id="search-container" class="active">
+        <form id="search-form" onsubmit="performSearch(); return false;">
+            <input type="text" id="search-box" placeholder="Buscar en Harmony">
+            <button id="search-button" type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <div id="results">
+
+    </div>
+
+    <div class="search-links">
+        <a class="search-link" href="https://www.google.com/search?q=" target="_blank">Buscar en Google</a>
+        <a class="search-link" href="https://www.bing.com/search?q=" target="_blank">Buscar en Bing</a>
+        <a class="search-link" href="https://search.yahoo.com/search?p=" target="_blank">Buscar en Yahoo</a>
+        <a class="search-link" href="https://www.youtube.com/search?p=" target="_blank">Buscar en Youtube</a>
+    </div>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
+        window.onload = function() {
+            const searchContainer = document.getElementById('search-container');
+            searchContainer.classList.add('active');
+        }
+
+        function performSearch() {
+            var searchQuery = document.getElementById('search-box').value.toLowerCase();
+            var content = document.body.innerText.toLowerCase();
+
+            var resultsContainer = d3.select('#results');
+            resultsContainer.selectAll('*').remove();
+
+            if (searchQuery.trim() === "") {
+                resultsContainer.append('p').text('Ingresa una palabra para buscar.');
+                return;
+            }
+
+            var searchWords = searchQuery.split(' ');
+            var searchResults = [];
+
+            for (var i = 0; i < searchWords.length; i++) {
+                var word = searchWords[i];
+                if (content.includes(word)) {
+                    searchResults.push(word);
+                }
+            }
+
+            if (searchResults.length > 0) {
+                resultsContainer.append('p').text('Palabras encontradas en el contenido:');
+                var resultItems = resultsContainer.selectAll('.result')
+                    .data(searchResults)
+                    .enter()
+                    .append('div')
+                    .attr('class', 'result')
+                    .text(function(d) { return d; });
+            } else {
+                resultsContainer.append('p').text('No se encontraron palabras en el contenido.');
+            }
+        }
+    </script>
+</body>
+</html>
