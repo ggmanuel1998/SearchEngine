@@ -5,7 +5,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: url('fondo2.jpg') no-repeat center center fixed;
+            background: url("{{url_for('static', filename='img/fondo2.jpg')}}") no-repeat center center fixed;
             background-size: cover;
             margin: 0;
             padding: 0;
@@ -22,10 +22,6 @@
             text-align: center;
             padding: 20px;
             transition: background-color 5s ease;
-        }
-
-        header:hover {
-           
         }
 
         h1 {
@@ -50,19 +46,25 @@
             width: 500px;
             padding: 10px;
             font-size: 18px;
-            border: 1px solid #ccc;
+            /* border: 1px solid #ccc; */
+            border: 0;
             border-radius: 4px;
             transition: border-color 0.3s ease;
+            color: white;
+
+            background-color: #2B2A33;
         }
 
         #search-box:focus {
-            border-color: #2f5ea0;
+            /* border-color: #2f5ea0; */
+            border: 1px white solid;
         }
 
         #search-button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #43f7f7;
+            /* background-color: #43f7f7; */
+            background-color: rgb(7, 162, 162);
             color: #fff;
             border: none;
             border-radius: 4px;
@@ -71,7 +73,8 @@
         }
 
         #search-button:hover {
-            background-color: #1f8387;
+            /* background-color: #1f8387; */
+            background-color: #19696C;
         }
 
         #results {
@@ -110,7 +113,8 @@
         .search-link {
             display: inline-block;
             margin-right: 10px;
-            color: #2f5ea0;
+            /* color: #2f5ea0; */
+            color:white;
             text-decoration: none;
         }
 
@@ -137,7 +141,7 @@
 </head>
 <body>
     <header>
-        <img id="logo" src="logo1.png" alt="Logo de Mi Motor de Búsqueda">
+        <img id="logo" src="{{url_for('static', filename='img/logo1.png')}}" alt="Logo de Mi Motor de Búsqueda">
         <h1><span id="tagline">Todo a la palma de tu mano!</span></h1>
     </header>
 
