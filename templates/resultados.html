@@ -50,7 +50,7 @@
 </head>
 <body>
     <div class="resultados-container">
-        <img id="logo" src="{{url_for('static', filename='img/logo1.png')}}" alt="Logo de Mi Motor de Búsqueda">
+        <img id="logo" src="{{url_for('static', filename='img/logo1.png')}}" alt="Logo de Motor de Búsqueda">
         {% for key, value in resultados.items() %}
         <a class="resultado" href="{{ value }}">
             {{ key }}
